@@ -1,0 +1,47 @@
+#!/bin/bash
+
+get_watts() {
+    cat /sys/class/power_supply/BAT0/{current_now,voltage_now} |
+        xargs -n 2 |
+        awk '{print $1 * 0.000001 * $2 * 0.000001 " W"}'
+}
+
+get_capacity() {
+    cat /sys/class/power_supply/BAT0/capacity | awk '{print $1"%"}'
+}
+
+get_status() {
+    cat /sys/class/power_supply/BAT0/status
+}
+
+get_host() {
+    echo "$(cat /etc/hostname)|$(get_capacity)|$(get_watts)|$(get_status)"
+}
+
+get_android() {
+    if [ ! -z "$(pgrep adb)" ]; then
+        devices=$( adb devices | tail -n +2 )
+        if [ ! -z "$devices" ]; then
+            device="$(adb shell dumpsys settings | grep "name:device_name" | sed "s/.*pkg:android value:\([^default:]*\).*/\1/")"
+            level="$(adb shell dumpsys battery | grep level | xargs -n 2 | awk '{print $2"%"}')"
+            state="Discharging"
+            if [ ! -z "$(adb shell dumpsys battery | grep "powered: true")" ]; then
+                state="Charging"
+            fi
+
+            #if [ ! -z $(adb shell dumpsys user | grep "mHoldingDisplaySuspendBlocker=true") ]; then
+            #    state="Unlocked"
+            #else
+            #    state="Locked"
+            #fi
+            echo "$device|$level||$state"
+        fi
+    fi
+}
+
+{
+    echo -e "Host|Capacity|Wattage|Status"
+    get_host
+    get_android
+
+} | column -t -s "|"

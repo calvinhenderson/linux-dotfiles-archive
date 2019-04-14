@@ -1,0 +1,7 @@
+#!/bin/bash
+# Clips the screen to the clipboard
+
+name=$(date +%m-%d-%Y_%H-%M.png)
+scrot $@ /tmp/$name
+xclip -selection clipboard -target image/png < /tmp/$name
+rm /tmp/$name

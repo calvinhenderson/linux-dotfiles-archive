@@ -1,0 +1,18 @@
+[submodule "vim/.vim/pack/github/start/vim-qml"]
+	path = vim/.vim/pack/github/start/vim-qml
+	url = https://github.com/peterhoeg/vim-qml
+[submodule "vim/.vim/pack/github/start/syntastic"]
+	path = vim/.vim/pack/github/start/syntastic
+	url = https://github.com/vim-syntastic/syntastic
+[submodule "vim/.vim/pack/github/start/limelight.vim"]
+	path = vim/.vim/pack/github/start/limelight.vim
+	url = https://github.com/junegunn/limelight.vim
+[submodule "vim/.vim/pack/github/start/goyo.vim"]
+	path = vim/.vim/pack/github/start/goyo.vim
+	url = https://github.com/junegunn/goyo.vim
+[submodule "vim/.vim/pack/github/start/YouCompleteMe"]
+	path = vim/.vim/pack/github/start/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe
+[submodule "vim/.vim/pack/github/start/wal.vim"]
+	path = vim/.vim/pack/github/start/wal.vim
+	url = https://github.com/dylanaraps/wal.vim
