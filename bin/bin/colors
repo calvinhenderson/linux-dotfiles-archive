@@ -1,0 +1,14 @@
+#!/bin/sh
+
+print_color() {
+    for _ in $(seq 0 4); do
+        for j in $(seq "$1" "$2"); do
+            printf '\33[%dm        \33[m ' "$j"
+        done
+        printf '\n'
+    done
+    printf '\n'
+}
+
+print_color 40 47
+print_color 100 107
