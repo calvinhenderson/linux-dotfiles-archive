@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "error. missing filename"
+    exit 1
+fi
+
+resolution=$(xdpyinfo | grep dimensions | awk '{print $2}')
+filters='noise=alls=10,scale=iw*.05:-1,scale=iw*20:-1:flags=neighbor' 
+ffmpeg -y -s "$resolution" -f x11grab -i "$DISPLAY" -vframes 1 \
+  -vf "$filters" "$1"

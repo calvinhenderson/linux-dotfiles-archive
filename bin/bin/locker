@@ -1,0 +1,124 @@
+#!/bin/sh
+
+img=""
+
+# Query xrdb resource
+get_property() {
+    if [ -n "$(xrdb -query | awk '/^*'"$1"':/{print $2}')" ]; then
+        xrdb -query | awk '/^*'"$1"':/{print $2}'
+    elif [ -n "$(xrdb -query | awk '/^style\.'"$1"':/{print $2}')" ]; then
+        xrdb -query | awk '/^style\.'"$1"':/{print $2}'
+    elif [ -n "$(xrdb -query | awk '/^*\.'"$1"':/{print $2}')" ]; then
+        xrdb -query | awk '/^*\.'"$1"':/{print $2}'
+    fi
+}
+
+blur() {
+    convert -resize 25% -colorspace Gray -filter point -resize 400% "$1" "$1"
+    #convert -resize 25% -blur 0x1.0 -filter point -resize 400% $1 $1
+}
+
+# grabs a screenshot and blurs all in one!
+grab() {
+    image_file=/tmp/screen_lock.png
+    filters='noise=alls=10,scale=iw*.10:-1,scale=iw*10:-1:flags=neighbor' 
+    ffmpeg -y -loglevel 0 -s "$(xdpyinfo | awk '/dimensions:/{print $2}')" -f x11grab -i "$DISPLAY" -vframes 1 \
+        -vf "$filters" "$image_file"
+    echo "$image_file"
+}
+
+# Pause notifications
+prelock() {
+    if [ -n "$(pidof dunst)" ]; then
+        killall -USR1 dunst
+    fi
+
+    if [ -n "$img" ]; then
+        blur $img
+    else
+        img="$(grab | tail -n 1)"
+    fi
+}
+
+# Resume notifications
+postlock() {
+    if [ -n "$(pidof dunst)" ]; then
+        killall -USR2 dunst
+    fi
+
+    if [ -f "$img" ]; then
+        rm "$img"
+    fi
+}
+
+FONTSIZE=$(echo "scale=5; $(get_property font_size) * $(get_property dpi) / 72" | bc)
+BIGFONTSIZE=$(echo "scale=5; ($(get_property font_size) * $(get_property dpi) / 72) * 1.5" | bc)
+FONTSIZE=${FONTSIZE%.*}
+BIGFONTSIZE=${BIGFONTSIZE%.*}
+PADDING=$(get_property padding)
+
+YOFFSET=$PADDING
+
+RADIUS=$BIGFONTSIZE
+
+LOCKTEXT="$USER locked this machine"
+
+INDX=$(echo "scale=5; 240 * $(get_property dpi) / 72" | bc)
+INDX=${INDX%.*}
+INDY=$(( YOFFSET + RADIUS ))
+
+DATEX=$(( PADDING ))
+DATEY=$(( YOFFSET ))
+
+TIMEX=$(( PADDING ))
+TIMEY=$(( YOFFSET + FONTSIZE + $(get_property frame_width) ))
+
+LOCKOPTIONS=""
+newopt() {
+    LOCKOPTIONS="$LOCKOPTIONS $1"
+}
+
+newopt "--color $(get_property background)"
+newopt "--clock"
+newopt "--line-uses-inside"
+newopt "--insidecolor=#00000000"
+newopt "--insidevercolor=#00000000"
+newopt "--insidewrongcolor=#00000000"
+newopt "--keyhlcolor=$(get_property color4)ff"
+newopt "--bshlcolor=$(get_property color1)ff"
+newopt "--separatorcolor=#00000000"
+newopt "--verifcolor=#00000000"
+newopt "--wrongcolor=#00000000"
+newopt "--layoutcolor=#00000000"
+newopt "--indpos=x+$INDX:h-$INDY"
+newopt "--date-align 1"
+newopt "--datepos=x+$DATEX:h-$DATEY"
+newopt "--datesize=$FONTSIZE"
+newopt "--datecolor=$(get_property color4)ff"
+newopt "--timepos=x+$TIMEX:h-$TIMEY"
+newopt "--time-align=1"
+newopt "--timesize=$BIGFONTSIZE"
+newopt "--timecolor=$(get_property foreground)ff"
+newopt "--veriftext=''"
+newopt "--wrongtext=''"
+newopt "--noinputtext=''"
+newopt "--radius=$RADIUS"
+newopt "--ringvercolor=$(get_property color2)ff"
+newopt "--ringwrongcolor=$(get_property color1)ff"
+newopt "--ringcolor=$(get_property color12)ff"
+newopt "--ring-width=$(get_property frame_width)"
+newopt "--force-clock"
+
+lock() {
+    prelock
+
+    if [ -f "$img" ]; then
+        newopt "-i $img"
+    fi
+
+    i3lock $LOCKOPTIONS --datestr "$LOCKTEXT"
+
+    postlock
+}
+
+lock

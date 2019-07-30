@@ -1,12 +1,11 @@
-#!/bin/bash
+#!/bin/sh
+# vim: set noexpandtab:
 
-ROFIOPTS=(
-    -font "FontAwesome,Noto Sans Mono 14"
-    -i
-    -lines 6
-    -width 800
-    -hide-scrollbar
-    -opacity 100
+PARAMS=$(tr '\n' ' ' <<-ENDPARAMS
+	-i
+	-hide-scrollbar
+	-show run
+ENDPARAMS
 )
 
-rofi -show run "${ROFIOPTS[@]}"
+rofi $PARAMS

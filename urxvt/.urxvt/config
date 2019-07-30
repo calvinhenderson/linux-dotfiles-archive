@@ -1,0 +1,18 @@
+!------------------------------------------------------------------------------!
+! Terminal settings                                                            !
+!------------------------------------------------------------------------------!
+URxvt.depth: 32
+!URxvt.font: xft:monospace:size=14
+URxvt.font: -xos4-terminus-*-*-*-24-*
+URxvt.border: 0
+URxvt.borderLess: false
+URxvt.internalBorder: 40
+URxvt.externalBorder: 0
+URxvt*scrollBar: false
+URxvt*thickness: 0
+URxvt*scrollBar_right: false
+URxvt*scrollBar_floating: true
+URxvt*scrollTtyOutput: true
+URxvt*scrollWithBuffer: false
+URxvt*scrollTtyKeypress: true
+URxvt*perl-ext-common: default,config-reload

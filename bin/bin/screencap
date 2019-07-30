@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# This script is barely tested. Don't expect it to work
+
+time="0"
+file=""
+resolution=$(xdpyinfo | awk '/dimensions:/{print $2}')
+
+sleep_kill() {
+    if [ "$time" -gt "0" ]; then
+        sleep $time
+        kill -SIGINT "$1"
+    fi
+}
+
+record() {
+    ffmpeg -video_size "$resolution" \
+        -f x11grab -i :0.0 \
+        -preset ultrafast \
+        -b:v 1M \
+        -crf 15 \
+        "$HOME/Videos/$file" &
+
+    # automatically stop recording after this amount of time
+    sleep_kill $!
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+        "-t" | "--time")
+            shift
+            if [ -z "$1" ]; then
+                echo "missing time: [T]" && exit
+            fi
+            time="$1"
+        ;;
+        "-o" | "--output")
+            shift
+            if [ -z "$1" ]; then
+                echo "missing filename: [name].[format]" && exit
+            fi
+            file="$1"
+        ;;
+        "-s" | "--size")
+            shift
+            if [ -z "$1" ]; then
+                echo "missing resolution: [WxH]" && exit
+            fi
+            resolution="$1"
+        ;;
+        *)
+            echo "unrecognized option: $1"
+        ;;
+    esac
+    shift
+done
+
+if [ -z "$file" ]; then
+    file="$(date +%F_%H%M%S)_${resolution}.mp4"
+fi
+
+record

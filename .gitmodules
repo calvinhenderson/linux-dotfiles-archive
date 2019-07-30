@@ -16,3 +16,9 @@
 [submodule "vim/.vim/pack/github/start/wal.vim"]
 	path = vim/.vim/pack/github/start/wal.vim
 	url = https://github.com/dylanaraps/wal.vim
+[submodule "vim/.vim/pack/github/start/vim-gitentags"]
+	path = vim/.vim/pack/github/start/vim-gitentags
+	url = https://github.com/ludovicchabant/vim-gutentags
+[submodule "vim/.vim/pack/github/start/VimCompletesMe"]
+	path = vim/.vim/pack/github/start/VimCompletesMe
+	url = https://github.com/ajh17/VimCompletesMe

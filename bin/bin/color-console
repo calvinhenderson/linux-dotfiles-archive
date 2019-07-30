@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Updates the current color set for a TTY console
+# Colors are grabbed from the current theme (~/.theme in ~/.config/xresources/colors/)
+
+if [ "$TERM" != "linux" ]; then
+    exit 0
+fi
+
+scheme="$(cat ~/.theme)"
+theme="$(cat ~/.config/xresources/colors/"$scheme")"
+
+for i in $(seq 0 15); do
+    color="$(echo "$theme" | awk '/*color'"$i":'/ {print $2 }' | sed 's/#//')"
+    printf '\033]P%1X%s' "${i}" "${color}"
+done
+
+clear

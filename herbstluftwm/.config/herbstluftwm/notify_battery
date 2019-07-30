@@ -1,0 +1,137 @@
+#!/bin/sh
+
+# Time delay between checks (5 mins)
+DELAY=300
+
+# Battery threshold to consider low/full (percentage)
+BATTERY_THRESHOLD_LOW=15
+BATTERY_THRESHOLD_FULL=98
+
+# Message to display when battery is low/full
+MESSAGE_LOW="Battery low!"
+MESSAGE_FULL="Battery full!"
+
+is_low() {
+    if [ "$1" -le "$BATTERY_THRESHOLD_LOW" ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+is_full() {
+    if [ "$1" -ge "$BATTERY_THRESHOLD_FULL" ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+run() {
+    # Initial charge state
+    battery_before=$(acpi -b | grep -P -o '[0-9]+(?=%)')
+
+    # Notify if we're already beyond our bounds
+    if [ "$( is_low "$battery_before" )" ]; then
+        notify-send "$MESSAGE_LOW"
+    elif [ "$( is_full "$battery_before" )" ]; then
+        notify-send "$MESSAGE_FULL"
+    fi
+
+    # Continuously check according to [DELAY]
+    while true; do
+        # Wait a little..
+        sleep $DELAY
+
+        battery_now=$(acpi -b | grep -P -o '[0-9]+(?=%)')
+
+        # Battery Low
+        if  ! [ "$( is_low "$battery_before" )" ] \
+           && [ "$( is_low "$battery_now"    )" ]
+        then
+                notify-send "$MESSAGE_LOW"
+        fi
+
+        # Battery Full
+        if  ! [ "$( is_full "$battery_before" )" ] \
+           && [ "$( is_full "$battery_now"    )" ]
+        then
+                notify-send "$MESSAGE_FULL"
+        fi
+
+        battery_before="$battery_now"
+    done
+}
+
+is_num() {
+    if ! [ "$1" -eq "$1" ] 2>/dev/null; then
+        echo "not a number"
+        return 1
+    fi
+}
+
+print_usage_and_exit() {
+cat << EOF
+
+Usage: notify_battery [OPTIONS]
+
+DEFAULTS
+        delay		$DELAY seconds
+        low threshold	$BATTERY_THRESHOLD_LOW%
+        full threshold	$BATTERY_THRESHOLD_FULL%
+
+OPTIONS
+	-d,--delay  s	where s is the number of seconds to delay between checks
+	-l,--low    n	where n is the percentage threshold to consider the battery low
+	-f,--full   n	where n is the percentage threshold to consider the battery full
+
+EOF
+    exit 1
+}
+
+# Parse command-line args
+while [ -n "$1" ]; do
+    case "$1" in
+        "-d" | "--delay")
+            if [ "$(is_num "$2")" ]; then
+                printf 'expected number after %s, got: %s\n' "$1" "$2"
+                print_usage_and_exit
+            else
+                DELAY="$2"
+                shift
+            fi
+        ;;
+        "-l" | "--low")
+            if [ "$( is_num "$2" )" ]; then
+                printf 'expected number after %s, got: %s\n' "$1" "$2"
+                print_usage_and_exit
+            else
+                BATTERY_THRESHOLD_LOW="$2"                
+                shift
+            fi
+        ;;
+        "-f" | "--full")
+            if [ "$( is_num "$2" )" ]; then
+                printf 'expected number after %s, got: %s\n' "$1" "$2"
+                print_usage_and_exit
+            else
+                BATTERY_THRESHOLD_FULL="$2"                
+                shift
+            fi
+        ;;
+        *)
+            printf 'unrecognized option: %s\n' "$1"
+            print_usage_and_exit
+        ;;
+    esac
+    shift
+done
+
+cat << EOF
+Using the following options:
+        delay		$DELAY seconds
+        low threshold	$BATTERY_THRESHOLD_LOW%
+        full threshold	$BATTERY_THRESHOLD_FULL%
+EOF
+
+run

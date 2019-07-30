@@ -1,28 +1,31 @@
-#!/bin/bash
+#!/bin/sh
+# vim: set noexpandtab:
 
-OPTIONS=(
-"\t\uf023\tLock\n"
-"\t\uf186\tSuspend\n"
-"\t\uf08b\tLogout\n"
-"\t\uf01e\tReboot\n"
-"\t\uf011\tPoweroff\n"
-"\t\uf05e\tCancel"
+PROMPT=$(cat <<-ENDPROMPT
+		Lock
+		Suspend
+		Logout
+		Reboot
+		Poweroff
+		Cancel
+ENDPROMPT
+	#	Hibernate
 )
 
-ROFIOPTS=(
-    -font "FontAwesome,Noto Sans Book 13"
-    -i
-    -disable-history
-    -no-custom
-    -lines ${#OPTIONS[@]}
-    -width 240
-    -hide-scrollbar
-    -opacity 100
+PARAMS=$(tr '\n' ' ' <<-ENDPARAMS
+	-i
+	-lines $(echo "$PROMPT" | wc -l)
+	-width 250
+	-disable-history
+	-no-custom
+	-hide-scrollbar
+	-show run
+	-dmenu
+	-p action
+ENDPARAMS
 )
 
-SELECTION=$(echo -e "${OPTIONS[@]}" | rofi -dmenu -p "" "${ROFIOPTS[@]}")
-
-case "$(echo ${SELECTION} | awk '{print $2}')" in
+case "$(echo "$PROMPT" | rofi $PARAMS | awk '{print $2}')" in
     "Poweroff")
         systemctl poweroff
         ;;
@@ -32,11 +35,14 @@ case "$(echo ${SELECTION} | awk '{print $2}')" in
     "Logout")
         herbstclient quit
         ;;
+    "Hibernate")
+        locker && systemctl hibernate
+        ;;
     "Suspend")
-        betterlockscreen -s
+        locker && systemctl suspend
         ;;
     "Lock")
-        betterlockscreen -l
+        locker
         ;;
     "Cancel" | *)
         exit

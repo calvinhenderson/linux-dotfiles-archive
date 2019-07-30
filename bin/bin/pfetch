@@ -1,0 +1,50 @@
+#!/bin/sh
+# Special thanks to https://github.com/geekdima for the original script
+
+userhost="$USER@$(uname -n)"
+uh_len=${#userhost}
+uh_under=$(printf "%${uh_len}s" | tr " " "=")
+
+kernel="$(uname -sr | awk '{split($0,a,"-"); print a[1]}')"
+
+# Works only on Intel CPUs
+cpu="$(lscpu | grep "^CPU(s)" | awk '{print $2}')x \
+$(lscpu | grep 'Model name' | awk '{print $5}') @ \
+$(lscpu | grep "max MHz" | awk '{print $4 / 1000}')GHz"
+
+gpu="$(lspci | grep VGA | sed -e 's/.*: //' -e 's/ (.*)$//' -e 's/Corporation //' -e 's/Graphics //')"
+
+mem="$(free -h --si | grep "Mem:" | awk '{print $3 "/" $2}')"
+
+disk="$(df -h / | tail -n 1 | awk '{print $3"/"$2}')" 
+
+# 24-bit RGB  FG/BG r g b
+# printf "\033[38;2;0;0;0m"
+# printf "\033[48;2;0;0;0m"
+setcol="\033[0;34m"
+rstcol="\033[;m"
+
+echo ""
+printf "$setcol      .^.       $rstcol %s \n" "$userhost"
+printf "$setcol     /   \      $rstcol %s \n" "$uh_under"
+printf "$setcol    _,    \     $rstcol %s \n" "$kernel"
+printf "$setcol   /  .-.  \    $rstcol %s \n" "$cpu"
+printf "$setcol  /  /   \  \   $rstcol %s \n" "$gpu"
+printf "$setcol /   |   |  -.  $rstcol %s \n" "$mem"
+printf "$setcol/__-'     '-__\ $rstcol %s \n" "$disk"
+echo ""
+
+filename="$HOME/Pictures/$(date +%Y-%m-%d-%H%M%S)_$(xdpyinfo | awk '/dimensions:/{print $2}')_scrot.png"
+
+while [ -n "$1" ]; do
+    case "$1" in
+        "-s" | "--screenshot")
+            if [ ! -d "$HOME/Pictures" ]; then
+                mkdir -p "$HOME/Pictures"
+            fi
+            scrot "$filename"
+            echo "Screenshot saved to: $HOME/Pictures/$filename"
+        ;;
+    esac
+    shift
+done

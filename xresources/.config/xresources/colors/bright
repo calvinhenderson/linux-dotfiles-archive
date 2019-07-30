@@ -1,0 +1,37 @@
+!------------------------------------------------------------------------------!
+! Color settings                                                               !
+!------------------------------------------------------------------------------!
+*background: #f1f1f1
+*foreground: #000000
+
+! black
+*color0: #000000
+*color8: #212121
+
+! red
+*color1: #c46d77
+*color9: #d8a0a7
+
+! green
+*color2: #77c46d
+*color10: #a7d8a0
+
+! yellow
+*color3: #c4ba6d
+*color11: #d8d2a0
+
+! blue
+*color4: #6d77c4
+*color12: #a0a7d8
+
+! magenta
+*color5: #ba6dc4
+*color13: #d2a0d8
+
+! cyan
+*color6: #6dc4ba
+*color14: #a0d8d2
+
+! white
+*color7: #cdcdcd
+*color15: #f1f1f1

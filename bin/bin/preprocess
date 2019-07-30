@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Replaces all matches of "${xrdb:key}" with its respective resource value
+# USAGE:
+#  preprocess <file>
+#    processes <file>.in and outputs it as <file>
+
+if [ ! -f "$1.in" ]; then
+    echo "[error]: missing file: $1.in"
+    return
+fi
+
+rm "$1"
+cp "$1.in" "$1"
+
+for i in $(seq 0 15)
+do
+    v=$(xrdb -query | awk '/*color'"$i":'/ { print $2 }')
+    eval "sed -i 's/\${xrdb:color${i}}/${v}/g' $1";
+done
+
+foreground=$(xrdb -query | awk '/*foreground/ { print $2 }')
+background=$(xrdb -query | awk '/*background/ { print $2 }')
+
+xrdb -query | xargs -d ':' echo | grep "^style" | while read -r key val; do
+    sed -i "s/\${xrdb:$key}/${val}/g" "$1"
+done
+
+sed -i "s/\${xrdb:foreground}/${foreground}/g" "$1"
+sed -i "s/\${xrdb:background}/${background}/g" "$1"

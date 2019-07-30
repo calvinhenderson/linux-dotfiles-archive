@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Updates the current wm theme and makes it persistent
+# Available values are located in $HOME/.config/xresources/colors
+#
+# EXAMPLE:
+#  switch-colors darkblue
+
+echo "$1" > ~/.theme
+herbstclient reload

@@ -1,0 +1,61 @@
+#!/bin/sh
+
+cat << EOF | xargs -d ' ' printf "%b "
+\033[1;34mMoving the cursor:\033[m
+
+    Ctrl + a   Go to the beginning of the line (Home)
+    Ctrl + e   Go to the End of the line (End)
+        Hold the Meta key and click on the current line = Jump Backwards
+    
+    Ctrl + f   Forward one character
+    Ctrl + b   Backward one character
+     Alt + b   Back (left) one word      or use Option+Right-Arrow
+     Alt + f   Forward (right) one word  or use Option+Left-Arrow
+    
+    Ctrl + xx  Toggle between the start of line and current cursor position
+
+\033[1;34mEditing:\033[m
+
+    Ctrl + L   Clear the Screen, similar to the clear command
+
+     Alt + Del Delete the Word before the cursor.
+     Alt + d   Delete the Word after the cursor.
+    Ctrl + d   Delete character under the cursor
+    Ctrl + h   Delete character before the cursor (backspace)
+
+    Ctrl + y   Paste the clipboard.
+    Ctrl + w   Cut the Word before the cursor to the clipboard.
+    Ctrl + k   Cut the Line after the cursor to the clipboard.
+    Ctrl + u   Cut/delete the Line before the cursor position.
+
+     Alt + t   Swap current word with previous
+    Ctrl + t   Swap the last two characters before the cursor (typo).
+    Esc  + t   Swap the last two words before the cursor.
+
+\033[1;34mHistory:\033[m
+
+    Ctrl + r   Recall the last command including the specified character(s)
+               searches the command history as you type.
+    Ctrl + p   Previous command in history (i.e. walk back through the command history)
+    Ctrl + n   Next command in history (i.e. walk forward through the command history)
+    
+    Ctrl + o   Execute the command found via Ctrl+r or Ctrl+s
+    Ctrl + g   Escape from history searching mode
+
+\033[1;34mProcess control:\033[m
+
+ Ctrl + c   Interrupt/Kill whatever you are running (SIGINT)
+ Ctrl + l   Clear the screen
+ Ctrl + s   Stop output to the screen (for long running verbose commands)
+ Ctrl + q   Allow output to the screen (if previously stopped using command above)
+ Ctrl + d   Send an EOF marker, unless disabled by an option, this will close the current shell (EXIT)
+ Ctrl + z   Send the signal SIGTSTP to the current task, which suspends it.
+            To return to it later enter fg 'process name' (foreground).
+
+\033[1;34mSpecial keys:\033[m
+
+    Ctrl+I = Tab
+    Ctrl+J = Newline
+    Ctrl+M = Enter
+    Ctrl+[ = Escape
+EOF

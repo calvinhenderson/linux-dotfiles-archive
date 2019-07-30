@@ -1,0 +1,36 @@
+#!/bin/sh
+
+BAR=0  # if 1, keep current settings (no change)
+PAD=0  # if 1, keep current settings (no change)
+
+# Parse config options
+while [ -n "$1" ]; do
+    case "$(echo $1 | tr '[:upper:]' '[:lower:]')" in
+        "b" | "bar" ) BAR=1 ;;
+        "p" | "pad" ) PAD=1 ;;
+    esac
+    shift
+done
+
+ex() {
+    echo "$@"
+    $@ &
+}
+
+# Hide status bars
+if [ "$BAR" -eq 0 ]; then
+    echo "hiding polybar.."
+    ex killall polybar
+    ex herbstclient pad 0 0
+fi
+
+# Remove visual gap between windows and frames
+if [ "$PAD" -eq 0 ]; then
+    echo "removing visual gap.."
+    ex herbstclient attr settings.window_gap 0
+    ex herbstclient attr settings.frame_gap 0
+fi
+
+# Wait for currently executing commands to finish
+# (prevents stdout from being overwritten)
+wait
