@@ -30,7 +30,7 @@ xrdb -merge $HOME/.urxvt/config
 
 # session configuration
 #feh --no-fehbg --bg-fill ~/Pictures/wallpaper/pier.jpg
-root_background=$(xrdb -query | awk '/*color7:/{print $2}')
+root_background=$(xrdb -query | awk '/*color12:/{print $2}')
 hsetroot -solid "$root_background" &
 xsetroot -cursor_name left_ptr &
 
