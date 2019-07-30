@@ -23,6 +23,7 @@ killall herbstclient
 killall compton
 killall dunst
 killall notify_battery
+killall flashfocus
 
 $HOME/.config/herbstluftwm/config
 xrdb -merge $HOME/.config/rofi/xresources
@@ -44,3 +45,4 @@ dunst &
 compton -b &
 polybar top &
 $HOME/.config/herbstluftwm/notify_battery &
+flashfocus &
