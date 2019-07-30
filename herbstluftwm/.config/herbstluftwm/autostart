@@ -30,15 +30,8 @@ xrdb -merge $HOME/.config/rofi/xresources
 xrdb -merge $HOME/.urxvt/config
 
 # session configuration
-#feh --no-fehbg --bg-fill ~/Pictures/wallpaper/pier.jpg
-root_background=$(xrdb -query | awk '/*color12:/{print $2}')
-hsetroot -solid "$root_background" &
+hsetroot -solid "$(xrdb -query | awk '/*color12:/{print $2}')" &
 xsetroot -cursor_name left_ptr &
-
-# keyboard (no longer needed -- created kernel udev rule)
-# setkbcolor -solid $root_background
-# setxkbmap -option caps:swapescape &
-# xset r rate 500 50 &
 
 # user processes
 dunst &

@@ -7,7 +7,7 @@ URxvt.depth: 32
 URxvt.font: -xos4-terminus-*-*-*-24-*
 URxvt.border: 0
 URxvt.borderLess: false
-URxvt.internalBorder: 40
+URxvt.internalBorder: 25
 URxvt.externalBorder: 0
 URxvt*scrollBar: false
 URxvt*thickness: 0

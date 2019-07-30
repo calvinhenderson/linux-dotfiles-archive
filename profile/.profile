@@ -9,9 +9,18 @@ export PATH=$HOME/bin:$PATH
 #---------#
 # Aliases #
 #---------#
-alias ls="ls -ah --group-directories-first --color=always"
-alias lsl="ls -lah --group-directories-first --color=always"
 
+# ls
+alias ls="/usr/bin/ls -1 --group-directories-first --color=always"
+alias lsl="/usr/bin/ls -lh --group-directories-first --color=always"
+alias lsa="/usr/bin/ls -lah --group-directories-first --color=always"
+
+# tmux
+alias tnew="tmux new-session -s"
+alias tattach="tmux attach-session -t"
+alias tls="tmux list-sessions"
+
+# locker
 if [ "$TERM" = "linux" ]; then
     alias lock="physlock"
 else
@@ -21,6 +30,5 @@ fi
 #------- #
 # Prompt #
 #------- #
-export PS1="›› "
+export PS1="→ "
 color-console
-printf "====[ %s ]====\n" "$(date +%H:%M:%S)"

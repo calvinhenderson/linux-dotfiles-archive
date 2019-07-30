@@ -3,6 +3,7 @@
 
 PARAMS=$(tr '\n' ' ' <<-ENDPARAMS
 	-i
+	-lines 6
 	-hide-scrollbar
 	-show run
 ENDPARAMS

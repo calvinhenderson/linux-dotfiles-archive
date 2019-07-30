@@ -15,7 +15,8 @@ ENDPROMPT
 PARAMS=$(tr '\n' ' ' <<-ENDPARAMS
 	-i
 	-lines $(echo "$PROMPT" | wc -l)
-	-width 250
+	-width 400
+	-padding 20
 	-disable-history
 	-no-custom
 	-hide-scrollbar
