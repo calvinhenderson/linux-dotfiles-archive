@@ -30,5 +30,9 @@ fi
 #------- #
 # Prompt #
 #------- #
-export PS1="→ "
+if [ "$TERM" = "linux" ]; then
+    export PS1="› "
+else
+    export PS1="→ "
+fi
 color-console

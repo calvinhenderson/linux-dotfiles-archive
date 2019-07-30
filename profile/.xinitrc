@@ -1,2 +1,2 @@
 #!/bin/sh
-herbstluftwm
+/home/calvin/projects/herbstluftwm/build/bin/herbstluftwm
