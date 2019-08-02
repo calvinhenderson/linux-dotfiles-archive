@@ -30,7 +30,7 @@ xrdb -merge $HOME/.config/rofi/xresources
 xrdb -merge $HOME/.urxvt/config
 
 # session configuration
-hsetroot -solid "$(xrdb -query | awk '/*color12:/{print $2}')" &
+hsetroot -solid "$(xrdb -query | awk '/*color8:/{print $2}')" &
 xsetroot -cursor_name left_ptr &
 
 # user processes

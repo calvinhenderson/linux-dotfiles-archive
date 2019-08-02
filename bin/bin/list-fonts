@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# prints the current font list in a nicely formatted column
+
+# fetch the list of available fonts
+fonts="$(fc-list -f "%{family[0]}\n" | sort | uniq)"
+
+# width of each column
+colwidth=40
+
+# get the terminal width
+width="$(stty size | awk '{print $2}')"
+
+# current cursor x position
+cursorx=0
+IFS='
+'
+for font in $fonts; do
+    cursorx=$(( cursorx + colwidth + 1 ))
+
+    if [ "$cursorx" -ge "$width" ]; then
+        cursorx=0
+        printf '\n'
+    fi
+    printf '%-*s' "$colwidth" "$font"
+done
+printf '\n'
+

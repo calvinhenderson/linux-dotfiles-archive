@@ -3,8 +3,8 @@
 !------------------------------------------------------------------------------!
 URxvt.geometry: 110x38
 URxvt.depth: 32
-!URxvt.font: xft:monospace:size=14
-URxvt.font: -xos4-terminus-*-*-*-24-*
+URxvt.font: xft:monospace:size=10
+!URxvt.font: -xos4-terminus-*-*-*-24-*
 URxvt.border: 0
 URxvt.borderLess: false
 URxvt.internalBorder: 25

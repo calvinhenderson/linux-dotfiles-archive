@@ -7,5 +7,5 @@ if [ "$status" = "Playing" ]; then
 elif [ "$status" = "Paused" ]; then
     printf "%s" " $track"
 else
-    printf "%s" "%{F$(xrdb -query | awk '/*color1:/{print $2}')} Not playing%{F}"
+    printf "%s" "%{F$(xrdb -query | awk '/*color1:/{print $2}')} %{F}"
 fi

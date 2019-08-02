@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "0x20-10+50"
+    geometry = "600x20-5+50"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -41,7 +41,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 15
+    transparency = 0
 
     # The height of the entire notification.  If the height is smaller
     # than the font height and padding combined, it will be raised
@@ -51,17 +51,17 @@
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 10
+    separator_height = 1
 
     # Padding between text and separator.
-    padding = 10
+    padding = ${xrdb:style.padding}
 
     # Horizontal padding.
-    horizontal_padding = 10
+    horizontal_padding = ${xrdb:style.padding}
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = "${xrdb:style.frame_width}"
+    frame_width = "0"
 
     # Defines color of the frame around the notification window.
     frame_color = "${xrdb:color4}"
@@ -72,7 +72,7 @@
     #  * foreground: use the same color as the foreground;
     #  * frame: use the same color as the frame;
     #  * anything else will be interpreted as a X color.
-    separator_color = frame
+    separator_color = foreground
 
     # Sort messages by urgency.
     sort = yes
@@ -86,7 +86,7 @@
 
     ### Text ###
 
-    font = Andale Mono 13
+    font = ${xrdb:style.font_face} ${xrdb:style.font_size}
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -126,11 +126,11 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "<b>[%a] %s</b>\n%b\n"
+    format = "<b>%s</b> %b\n"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
-    alignment = left
+    alignment = center
 
     # Show age of message if message is older than show_age_threshold
     # seconds.

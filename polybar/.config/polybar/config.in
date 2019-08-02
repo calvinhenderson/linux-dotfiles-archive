@@ -107,9 +107,8 @@ interface = wlp1s0
 format-connected =  <label-connected>
 label-connected = "%essid%"
 
-format-disconnected =  <label-disconnected>
+format-disconnected = 
 format-disconnected-foreground = ${colors.alert}
-label-disconnected = "disconnected"
 
 ;-------------------------------------------------------------------------------
 ; BATTERY STATUS                                                               ;

@@ -18,13 +18,16 @@ hi CursorLineNr NONE ctermfg=13 cterm=bold
 hi Todo         NONE ctermfg=1
 
 " Visual
-hi VertSplit    NONE ctermfg=4
-hi StatusLineNC NONE ctermfg=4
-hi StatusLine   NONE ctermfg=12
-hi Search       NONE            cterm=bold,underline
-hi Folded       NONE            cterm=italic,underline
-hi Visual       NONE ctermfg=7  cterm=bold,italic
-hi WildMenu NONE ctermfg=7
+hi NonText          NONE ctermfg=0
+hi VertSplit        NONE ctermfg=4
+hi StatusLineNC     NONE ctermfg=4
+hi StatusLine       NONE ctermfg=12
+hi Search           NONE            cterm=bold,underline
+hi Folded           NONE            cterm=italic,underline
+hi Visual           NONE ctermfg=7  cterm=bold,italic
+hi WildMenu         NONE ctermfg=7
+hi StatusLineTermNC NONE ctermfg=4
+hi StatusLineTerm   NONE ctermfg=12
 
 " TabLine
 hi TabLine     NONE

@@ -2,6 +2,12 @@
 " Keybinds
 "----------
 
+" Switching buffers
+nnoremap gb :ls<CR>:b<space>
+
+" Searching tags
+nnoremap gt :tag<space>
+
 " Toggle line numbers
 nnoremap <C-k><C-n> :set number!<CR>
 nnoremap <C-k><C-r> :set relativenumber!<CR>
