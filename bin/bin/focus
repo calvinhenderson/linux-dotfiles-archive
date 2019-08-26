@@ -5,7 +5,7 @@ PAD=0  # if 1, keep current settings (no change)
 
 # Parse config options
 while [ -n "$1" ]; do
-    case "$(echo $1 | tr '[:upper:]' '[:lower:]')" in
+    case "$(echo "$1" | tr '[:upper:]' '[:lower:]')" in
         "b" | "bar" ) BAR=1 ;;
         "p" | "pad" ) PAD=1 ;;
     esac
@@ -29,7 +29,20 @@ if [ "$PAD" -eq 0 ]; then
     echo "removing visual gap.."
     ex herbstclient attr settings.window_gap 0
     ex herbstclient attr settings.frame_gap 0
+
+    MONITORS="$(herbstclient list_monitors | grep -o '^[0-9]\+')"
+    for monitor in $MONITORS; do
+        if [ "$BAR" -ne 0 ] && [ "$monitor" -eq 0 ]; then
+            height="$(xwininfo -id $(xwininfo -root -children | grep polybar | awk '{print $1}') | awk '/Height:/{print $2}')"
+            ex herbstclient pad "$monitor" "$height" 0 0 0
+        else
+            ex herbstclient pad "$monitor" 0 0 0 0
+        fi
+    done
 fi
+
+# Disable round corners
+ex herbstclient attr settings.window_radius 0
 
 # Wait for currently executing commands to finish
 # (prevents stdout from being overwritten)

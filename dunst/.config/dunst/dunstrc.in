@@ -290,8 +290,7 @@
 
 [urgency_critical]
     background = "${xrdb:background}"
-    foreground = "${xrdb:foreground}"
-    frame_color = "${xrdb:color1}"
+    foreground = "${xrdb:color1}"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon

@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Time delay between checks (5 mins)
-DELAY=300
+# Time delay between checks (1 min)
+DELAY=60
 
 # Battery threshold to consider low/full (percentage)
 BATTERY_THRESHOLD_LOW=15
@@ -13,6 +13,7 @@ MESSAGE_FULL="Battery full!"
 
 is_low() {
     if [ "$1" -le "$BATTERY_THRESHOLD_LOW" ]; then
+        echo "low"
         return 1
     else
         return 0
@@ -21,6 +22,7 @@ is_low() {
 
 is_full() {
     if [ "$1" -ge "$BATTERY_THRESHOLD_FULL" ]; then
+        echo "full"
         return 1
     else
         return 0
@@ -33,7 +35,7 @@ run() {
 
     # Notify if we're already beyond our bounds
     if [ "$( is_low "$battery_before" )" ]; then
-        notify-send "$MESSAGE_LOW"
+        notify-send -u critical "$MESSAGE_LOW"
     elif [ "$( is_full "$battery_before" )" ]; then
         notify-send "$MESSAGE_FULL"
     fi
@@ -49,7 +51,7 @@ run() {
         if  ! [ "$( is_low "$battery_before" )" ] \
            && [ "$( is_low "$battery_now"    )" ]
         then
-                notify-send "$MESSAGE_LOW"
+                notify-send -u critical "$MESSAGE_LOW"
         fi
 
         # Battery Full

@@ -17,8 +17,34 @@ get_status() {
     cat /sys/class/power_supply/BAT0/status
 }
 
+get_remaining() {
+    charge=$(cat /sys/class/power_supply/BAT0/charge_now)
+    current=$(cat /sys/class/power_supply/BAT0/current_now)
+
+    if [ "$current" -eq 0 ]; then
+        echo "00:00:00"
+        return 0;
+    fi
+
+    bc << ____EOF |
+        # calculate the remaining decimal time in hours
+        scale=4; r=($charge / $current)
+        scale=0;
+
+        # hours
+        (r + 0.5) / 1
+
+        # minutes
+        ((r % 1) * 60 + 0.5) / 1
+
+        # seconds
+        (((r % 1) * 60) % 1 * 60 + 0.5) / 1
+____EOF
+    xargs -n 3 printf '%.2d:%.2d:%.2d'
+}
+
 get_host() {
-    echo "$(cat /etc/hostname)|$(get_capacity)|$(get_watts)|$(get_status)"
+    echo "$(cat /etc/hostname)|$(get_capacity)|$(get_watts)|$(get_remaining)|$(get_status)"
 }
 
 get_android() {
@@ -37,13 +63,13 @@ get_android() {
             #else
             #    state="Locked"
             #fi
-            echo "$device|$level||$state"
+            echo "$device|$level|||$state"
         fi
     fi
 }
 
 {
-    echo "Host|Capacity|Wattage|Status"
+    echo "Host|Capacity|Wattage|Remaining|Status"
     get_host
     get_android
 

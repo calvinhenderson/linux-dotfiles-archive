@@ -8,3 +8,20 @@
 
 echo "$1" > ~/.theme
 herbstclient reload
+
+# Reload the terminal color palette
+sleep 2
+background="$(xrdb -query | awk '/*background:/{print $2}')" 
+color0="$(xrdb -query | awk '/*color0:/{print $2}')"
+
+# works when background is equal to color0 due to inner padding
+if [ "$background" = "$color0" ]; then
+    killall urxvt -SIGHUP
+    sleep .5
+    killall urxvt -SIGHUP
+else
+    notify-send "switch-colors" "could not to set terminal color palette"
+fi
+
+# Notify completion
+notify-send "switch-colors" "set the colorscheme to $1"

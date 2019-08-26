@@ -2,6 +2,8 @@
 " Keybinds
 "----------
 
+let mapleader = ","
+
 " Switching buffers
 nnoremap gb :ls<CR>:b<space>
 
@@ -19,5 +21,6 @@ nnoremap <C-l> :bn<CR>
 " Attempt to close buffer without closing split
 nnoremap <C-q> :bp<CR>:bd#<CR>
 
-" YouCompleteMe GoTo binds
-nnoremap <C-s> :YcmCompleter GoTo<CR>
+" YouCompleteMe binds
+nnoremap <Leader>j :YcmCompleter GoTo<CR>
+nnoremap <Leader>f :YcmCompleter FixIt<CR>
