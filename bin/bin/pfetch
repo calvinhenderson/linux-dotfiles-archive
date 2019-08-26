@@ -1,6 +1,8 @@
 #!/bin/sh
 # Special thanks to https://github.com/geekdima for the original script
 
+logo=1
+
 userhost="$USER@$(uname -n)"
 uh_len=${#userhost}
 uh_under=$(printf "%${uh_len}s" | tr " " "=")
@@ -16,23 +18,13 @@ gpu="$(lspci | grep VGA | sed -e 's/.*: //' -e 's/ (.*)$//' -e 's/Corporation //
 
 mem="$(free -h --si | grep "Mem:" | awk '{print $3 "/" $2}')"
 
-disk="$(df -h / | tail -n 1 | awk '{print $3"/"$2}')" 
+disk="$(df -h / | tail -n 1 | awk '{print $3"/"$2}')"
 
 # 24-bit RGB  FG/BG r g b
 # printf "\033[38;2;0;0;0m"
 # printf "\033[48;2;0;0;0m"
 setcol="\033[0;34m"
 rstcol="\033[;m"
-
-echo ""
-printf "$setcol      .^.       $rstcol %s \n" "$userhost"
-printf "$setcol     /   \      $rstcol %s \n" "$uh_under"
-printf "$setcol    _,    \     $rstcol %s \n" "$kernel"
-printf "$setcol   /  .-.  \    $rstcol %s \n" "$cpu"
-printf "$setcol  /  /   \  \   $rstcol %s \n" "$gpu"
-printf "$setcol /   |   |  -.  $rstcol %s \n" "$mem"
-printf "$setcol/__-'     '-__\ $rstcol %s \n" "$disk"
-echo ""
 
 filename="$HOME/Pictures/$(date +%Y-%m-%d-%H%M%S)_$(xdpyinfo | awk '/dimensions:/{print $2}')_scrot.png"
 
@@ -45,6 +37,29 @@ while [ -n "$1" ]; do
             scrot "$filename"
             echo "Screenshot saved to: $HOME/Pictures/$filename"
         ;;
+        "-l" | "--no-logo")
+            logo=0
+        ;;
     esac
     shift
 done
+
+if [ "$logo" -eq 1 ]; then
+    echo ""
+    printf "$setcol      .^.       $rstcol %s \n" "$userhost"
+    printf "$setcol     /   \      $rstcol %s \n" "$uh_under"
+    printf "$setcol    _,    \     $rstcol %s \n" "$kernel"
+    printf "$setcol   /  .-.  \    $rstcol %s \n" "$cpu"
+    printf "$setcol  /  /   \  \   $rstcol %s \n" "$gpu"
+    printf "$setcol /   |   |  -.  $rstcol %s \n" "$mem"
+    printf "$setcol/__-'     '-__\ $rstcol %s \n" "$disk"
+    echo ""
+else
+    printf "%s\n" "$userhost"
+    printf "%s\n" "$uh_under"
+    printf "%s\n" "$kernel"
+    printf "%s\n" "$cpu"
+    printf "%s\n" "$gpu"
+    printf "%s\n" "$mem"
+    printf "%s\n" "$disk"
+fi
