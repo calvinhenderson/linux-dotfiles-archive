@@ -18,8 +18,13 @@ get_status() {
 }
 
 get_remaining() {
-    charge=$(cat /sys/class/power_supply/BAT0/charge_now)
     current=$(cat /sys/class/power_supply/BAT0/current_now)
+
+    if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ]; then
+        charge=$(echo "$(cat /sys/class/power_supply/BAT0/charge_full) - $(cat /sys/class/power_supply/BAT0/charge_now)" | bc)
+    else
+        charge=$(cat /sys/class/power_supply/BAT0/charge_now)
+    fi
 
     if [ "$current" -eq 0 ]; then
         echo "00:00:00"

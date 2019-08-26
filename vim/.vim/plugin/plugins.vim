@@ -8,7 +8,7 @@ let g:ycm_enable_diagnostic_highlighting=0
 let g:ycm_enable_diagnostic_signs=1
 
 " Limelight
-let g:limelight_conceal_ctermfg="red"
+let g:limelight_conceal_ctermfg=8
 
 function! s:goyo_enter()
     "Limelight
