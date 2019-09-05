@@ -2,11 +2,22 @@
 
 # Updates the current wm theme and makes it persistent
 # Available values are located in $HOME/.config/xresources/colors
-#
-# EXAMPLE:
-#  switch-colors darkblue
+# Run with `--prompt` to execute a dmenu-style prompt to choose a colorscheme
 
-echo "$1" > ~/.theme
+COLOR=""
+
+if [ "$1" = "--prompt" ]; then
+    colors=$(find $HOME/.config/xresources/colors -type f | sed 's/.*\///')
+    COLOR="$(echo "$colors" | rofi -dmenu -width 350 -lines 6)"
+else
+    COLOR="$1"
+fi
+
+if [ -z "$COLOR" ]; then
+    exit 0
+fi
+
+echo "$COLOR" > ~/.theme
 herbstclient reload
 
 # Reload the terminal color palette
@@ -20,8 +31,8 @@ if [ "$background" = "$color0" ]; then
     sleep .5
     killall urxvt -SIGHUP
 else
-    notify-send "switch-colors" "could not to set terminal color palette"
+    notify-send "switch-colors" "\nfailed to update palette"
 fi
 
 # Notify completion
-notify-send "switch-colors" "set the colorscheme to $1"
+notify-send "switch-colors" "\n$COLOR"

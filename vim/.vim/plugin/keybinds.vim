@@ -4,6 +4,10 @@
 
 let mapleader = ","
 
+" Vertical scrolling
+nnoremap J <C-e>
+nnoremap K <C-y>
+
 " Switching buffers
 nnoremap gb :ls<CR>:b<space>
 

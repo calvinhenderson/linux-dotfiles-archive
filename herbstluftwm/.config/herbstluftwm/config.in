@@ -31,6 +31,7 @@ hc keybind XF86AudioNext spawn playerctl next
 hc keybind $Mod-Shift-q       quit
 hc keybind $Mod-Shift-r       reload
 hc keybind $Mod-q             close
+hc keybind $Mod-c             spawn switch-colors --prompt
 hc keybind Control-space      spawn $HOME/.config/rofi/prompt.sh
 hc keybind Control-Return     spawn urxvt
 hc keybind Control-Alt-l      spawn locker
