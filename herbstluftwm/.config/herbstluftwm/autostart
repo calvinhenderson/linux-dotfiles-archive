@@ -31,7 +31,7 @@ xrdb -merge $HOME/.urxvt/config
 
 # session configuration
 #hsetroot -solid "$(xrdb -query | awk '/*color8:/{print $2}')" &
-feh --no-fehbg --bg-fill ~/Pictures/wallpaper/el-capitan.jpg
+color-wallpaper &
 xsetroot -cursor_name left_ptr &
 
 # user processes

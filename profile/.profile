@@ -10,6 +10,12 @@ export PATH=$HOME/bin:$PATH
 # Aliases #
 #---------#
 
+# bash-keybinds shortcut
+alias keys="bash-keybinds | less -R"
+
+# htop
+alias htop="htop -t"
+
 # ls
 alias ls="/usr/bin/ls -1 --group-directories-first --color=always"
 alias lsl="/usr/bin/ls -lh --group-directories-first --color=always"

@@ -5,8 +5,8 @@
 let mapleader = ","
 
 " Vertical scrolling
-nnoremap J <C-e>
-nnoremap K <C-y>
+nnoremap ] <C-e>
+nnoremap [ <C-y>
 
 " Switching buffers
 nnoremap gb :ls<CR>:b<space>
@@ -23,7 +23,11 @@ nnoremap <C-h> :bp<CR>
 nnoremap <C-l> :bn<CR>
 
 " Attempt to close buffer without closing split
-nnoremap <C-q> :bp<CR>:bd#<CR>
+nnoremap <Leader>q :bp<CR>:bd#<CR>
+
+" vim-clang-format binds
+nnoremap <Leader>F :ClangFormat<CR>
+vnoremap <Leader>F :ClangFormat<CR>
 
 " YouCompleteMe binds
 nnoremap <Leader>j :YcmCompleter GoTo<CR>

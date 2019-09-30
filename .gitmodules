@@ -22,3 +22,6 @@
 [submodule "vim/.vim/pack/github/start/VimCompletesMe"]
 	path = vim/.vim/pack/github/start/VimCompletesMe
 	url = https://github.com/ajh17/VimCompletesMe
+[submodule "vim/.vim/pack/github/start/vim-clang-format"]
+	path = vim/.vim/pack/github/start/vim-clang-format
+	url = https://github.com/rhysd/vim-clang-format

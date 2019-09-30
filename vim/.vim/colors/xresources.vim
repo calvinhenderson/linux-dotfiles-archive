@@ -24,7 +24,7 @@ hi StatusLineNC     NONE ctermfg=4
 hi StatusLine       NONE ctermfg=12
 hi Search           NONE            cterm=bold,underline
 hi Folded           NONE            cterm=italic,underline
-hi Visual           NONE ctermfg=7  cterm=bold,italic
+hi Visual           NONE ctermfg=7  cterm=italic,underline
 hi WildMenu         NONE ctermfg=7
 hi StatusLineTermNC NONE ctermfg=4
 hi StatusLineTerm   NONE ctermfg=12

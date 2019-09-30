@@ -15,8 +15,8 @@ set nowrap
 set cc=
 
 " Tabstop
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 " Gutter
@@ -40,7 +40,7 @@ set ignorecase
 set smartcase
 
 " Cursor line
-set cursorline
+set nocursorline
 
 " Makefile indentation
 au BufEnter Makefile set noexpandtab
@@ -48,6 +48,10 @@ au BufEnter Makefile set noexpandtab
 
 " Wildmenu
 set wildmenu
+
+" Netrw
+let g:netrw_browse_split=2
+let g:netrw_winsize=30
 
 " Tags file
 set tags=./tags;/
