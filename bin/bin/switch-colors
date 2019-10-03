@@ -4,14 +4,15 @@
 # Available values are located in $HOME/.config/xresources/colors
 # Run with `--prompt` to execute a dmenu-style prompt to choose a colorscheme
 
-COLOR=""
-
-if [ "$1" = "--prompt" ]; then
-    colors=$(find $HOME/.config/xresources/colors -type f | sed 's/.*\///')
-    COLOR="$(echo "$colors" | rofi -dmenu -width 350 -lines 6)"
-else
+case "$1" in
+  "--prompt" | "-p" | "")
+    colors=$(ls -ct "$HOME/.config/xresources/colors")
+    COLOR="$(echo "$colors" | rofi -dmenu -p "theme" -width 350 -lines 6)"
+  ;;
+  *)
     COLOR="$1"
-fi
+  ;;
+esac
 
 if [ -z "$COLOR" ]; then
     exit 0
@@ -19,6 +20,9 @@ fi
 
 echo "$COLOR" > ~/.theme
 herbstclient reload
+
+# Update colorscheme timestamp (used to sort in switcher)
+touch "$HOME/.config/xresources/colors/$COLOR"
 
 # Reload the terminal color palette
 sleep 2

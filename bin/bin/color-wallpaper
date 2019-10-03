@@ -1,39 +1,94 @@
 #!/bin/sh
 
+print_usage() {
+  cat <<_EOF
+USAGE:
+  color-wallpaper [-f filename] [-s WxH]
+
+DESCRIPTION:
+  Creates a blurred image based on the active color palette (X server database)
+
+OPTIONS:
+  -f file         sets the output image name/location
+  -s size         sets the output image resolution
+_EOF
+}
+
+# prints usage and exits if the first parameter is an empty string
+quit_empty() {
+  if [ -z "$1" ]; then
+    printf 'error: %s\n\n' "$2"
+    print_usage; exit 1
+  fi
+}
+
 set_wallpaper() {
   feh --no-fehbg --bg-fill "$file" && exit 0
 }
+
+# returns the matching color from the list
 color() {
-  echo "$colors" | awk '/*color'"$1"':/{print $2}'
+  echo "$colors" | awk '/*.?color'"$1"':/{print $2}'
 }
+
+# returns a formatted string to draw the specified circle
 circle() {
   echo "$pos" | xargs -n3 | sed -n "$1"p | awk '{print "translate "$1", "$2"circle 0,0 "$3",0"}'
 }
 
-file="$HOME/.cache/wallpaper-$(cat ~/.theme).png"
+case "$1" in
+  "-f" | "--file")
+    quit_empty "$2" "expected file name"
+    file="$2"
+    shift; shift
+  ;;
 
-colors="$(xrdb -query)"
+  "-s" | "--size")
+    quit_empty "$2" "expected image size"
+    size="$2"
+    shift; shift
+  ;;
 
-width="1920"
-height="1080"
+  *)
+    printf 'unrecognized option: %s\n' "$1"
+    print_usage; exit 1
+  ;;
+esac
 
-if [ -r "$HOME/.cache/wallpaper-$(cat ~/.theme).png" ]; then
+# defaults
+if [ -z "$size" ]; then
+  size="1920x1080"
+fi
+
+if [ -z "$file" ]; then
+  file="$(date +%F-%H%M%S_$size).png"
+fi
+
+# check if the file exists already
+if [ -r "$file" ]; then
+  printf 'image already exists. setting.\n'
   set_wallpaper
 fi
 
-pos=$(bc <<EOF
-  scale=4;
-            -40;            -40; $width * 0.50; # top left
-  $width * 0.75; $height * 0.30; $width * 0.30; # top right
-  $width * 0.10; $height * 0.70; $width * 0.22; # bottom left
-  $width * 0.50; $height * 0.90; $width * 0.15; # bottom middle
-  $width * 0.80; $height * 0.70; $width * 0.20; # bottom right
-EOF
+
+# calculate circle positions
+pos=$(bc <<_EOF
+  width=$(echo "$size" | cut -f1 -dx)
+  height=$(echo "$size" | cut -f2 -dx)
+  scale=4; -40;           -40; width * 0.50; # top left
+  width * 0.75; height * 0.30; width * 0.30; # top right
+  width * 0.10; height * 0.70; width * 0.22; # bottom left
+  width * 0.50; height * 0.90; width * 0.15; # bottom middle
+  width * 0.80; height * 0.70; width * 0.20; # bottom right
+_EOF
 )
 
+# acquire the active palette
+colors="$(xrdb -query | grep color)"
+
 convert \
-  -size "${width}x${height}" xc:black \
-    -stroke white -strokewidth 1 \
+  -size "$size" xc:"$(color 0)" \
+    -stroke white -strokewidth 0 \
     -fill "$(color 1)" -draw "$(circle 1)" \
     -fill "$(color 3)" -draw "$(circle 2)" \
     -fill "$(color 6)" -draw "$(circle 3)" \

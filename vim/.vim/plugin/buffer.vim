@@ -49,10 +49,6 @@ au BufEnter Makefile set noexpandtab
 " Wildmenu
 set wildmenu
 
-" Netrw
-let g:netrw_browse_split=2
-let g:netrw_winsize=30
-
 " Tags file
 set tags=./tags;/
 

@@ -25,6 +25,9 @@ nnoremap <C-l> :bn<CR>
 " Attempt to close buffer without closing split
 nnoremap <Leader>q :bp<CR>:bd#<CR>
 
+" Netrw
+nmap gs * <Plug>NetrwShrink
+
 " vim-clang-format binds
 nnoremap <Leader>F :ClangFormat<CR>
 vnoremap <Leader>F :ClangFormat<CR>

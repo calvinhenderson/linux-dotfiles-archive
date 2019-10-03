@@ -1,14 +1,21 @@
 !------------------------------------------------------------------------------!
 ! Terminal settings                                                            !
 !------------------------------------------------------------------------------!
-URxvt.geometry: 110x38
+! Window
+URxvt.geometry: 128x42
 URxvt.depth: 32
+
+! Font
 URxvt.font: xft:monospace:size=10
 !URxvt.font: -xos4-terminus-*-*-*-24-*
+
+! Border
 URxvt.border: 0
 URxvt.borderLess: false
 URxvt.internalBorder: 25
 URxvt.externalBorder: 0
+
+! Scrollbar
 URxvt*scrollBar: false
 URxvt*thickness: 0
 URxvt*scrollBar_right: false
@@ -16,4 +23,9 @@ URxvt*scrollBar_floating: true
 URxvt*scrollTtyOutput: true
 URxvt*scrollWithBuffer: false
 URxvt*scrollTtyKeypress: true
+
+! Extensions
 URxvt*perl-ext-common: default,config-reload
+
+! Keysyms
+URxvt.keysym.Control-Tab: \033[27;5;9~

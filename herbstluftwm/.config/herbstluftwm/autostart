@@ -31,7 +31,7 @@ xrdb -merge $HOME/.urxvt/config
 
 # session configuration
 #hsetroot -solid "$(xrdb -query | awk '/*color8:/{print $2}')" &
-color-wallpaper &
+color-wallpaper -f "$HOME/.cache/wallpaper-$(cat $HOME/.theme).png" &
 xsetroot -cursor_name left_ptr &
 
 # user processes
@@ -40,3 +40,5 @@ compton -b &
 polybar top &
 $HOME/.config/herbstluftwm/notify_battery &
 flashfocus &
+
+notify-send "Theme:" "$(sed 's/[-_]/ /g; s/\b\(.\)/\u\1/g' < "$HOME/.theme")"
