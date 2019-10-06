@@ -1,0 +1,8 @@
+#!/bin/sh
+
+rm /tmp/layout
+
+for tag in $(herbstclient tag_status | grep -o '[[:digit:]]' | xargs -n1); do
+  printf '%s: ' "$tag" >> /tmp/layout
+  herbstclient dump "$tag" >> /tmp/layout
+done

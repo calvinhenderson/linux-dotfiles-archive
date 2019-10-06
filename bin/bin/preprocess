@@ -15,12 +15,12 @@ cp "$1.in" "$1"
 
 for i in $(seq 0 15)
 do
-    v=$(xrdb -query | awk '/*color'"$i":'/ { print $2 }')
+    v=$(xrdb -query | awk '/^*.?color'"$i":'/ { print $2 }')
     eval "sed -i 's/\${xrdb:color${i}}/${v}/g' $1";
 done
 
-foreground=$(xrdb -query | awk '/*foreground/ { print $2 }')
-background=$(xrdb -query | awk '/*background/ { print $2 }')
+foreground=$(xrdb -query | awk '/^*.?foreground:/ { print $2 }')
+background=$(xrdb -query | awk '/^*.?background:/ { print $2 }')
 
 xrdb -query | xargs -d ':' echo | grep "^style" | while read -r key val; do
     sed -i "s/\${xrdb:$key}/${val}/g" "$1"

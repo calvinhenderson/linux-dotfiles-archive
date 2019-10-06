@@ -19,15 +19,19 @@ if [ -z "$COLOR" ]; then
 fi
 
 echo "$COLOR" > ~/.theme
+
+~/.config/herbstluftwm/save-layout
 herbstclient reload
+sleep 2
 
 # Update colorscheme timestamp (used to sort in switcher)
 touch "$HOME/.config/xresources/colors/$COLOR"
 
+~/.config/herbstluftwm/load-layout
+
 # Reload the terminal color palette
-sleep 2
-background="$(xrdb -query | awk '/*background:/{print $2}')" 
-color0="$(xrdb -query | awk '/*color0:/{print $2}')"
+background="$(xrdb -query | awk '/^*.?background:/{print $2}')" 
+color0="$(xrdb -query | awk '/^*.?color0:/{print $2}')"
 
 # works when background is equal to color0 due to inner padding
 if [ "$background" = "$color0" ]; then
@@ -35,7 +39,7 @@ if [ "$background" = "$color0" ]; then
     sleep .5
     killall urxvt -SIGHUP
 else
-    notify-send "switch-colors" "\nfailed to update palette"
+    notify-send "switch-colors" "\nfailed to set urxvt palette"
 fi
 
 # Notify completion

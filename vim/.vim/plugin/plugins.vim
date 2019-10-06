@@ -11,7 +11,7 @@ let g:netrw_usetab=1
 
 " vim-clang-format
 let g:clang_format#auto_format=1                 " auto format
-let g:clang_format#auto_format_on_insert_leave=1 " auto format
+let g:clang_format#auto_format_on_insert_leave=0 " auto format after insert
 let g:clang_format#code_style='mozilla'          " code style
 let g:clang_format#auto_formatexpr=1             " gq to format
 
