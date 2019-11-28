@@ -49,7 +49,11 @@ ____EOF
 }
 
 get_host() {
-    echo "$(cat /etc/hostname)|$(get_capacity)|$(get_watts)|$(get_remaining)|$(get_status)"
+    if [ -d /sys/class/power_supply/BAT0 ]; then
+        echo "$(cat /etc/hostname)|$(get_capacity)|$(get_watts)|$(get_remaining)|$(get_status)"
+    else
+        echo "$(cat /etc/hostname)||||AC"
+    fi
 }
 
 get_android() {
