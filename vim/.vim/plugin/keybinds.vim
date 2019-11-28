@@ -15,8 +15,15 @@ nnoremap gb :ls<CR>:b<space>
 nnoremap gt :tag<space>
 
 " Toggle line numbers
-nnoremap <C-k><C-n> :set number!<CR>
-nnoremap <C-k><C-r> :set relativenumber!<CR>
+nnoremap <silent> <C-k><C-n> :call gutter#toggle_line_numbers()<CR>
+nnoremap <silent> <C-k><C-r> :call gutter#toggle_relative_numbers()<CR>
+
+" Line commenting
+nnoremap gc :norm I// <CR>
+nnoremap gC :s/\(^\s*\)\/\/\s/\1/g<CR>:noh<CR>
+
+vnoremap gc :norm I// <CR>
+vnoremap gC :s/\(^\s*\)\/\/\s/\1/g<CR>:noh<CR>
 
 " Switching buffers/tabs
 nnoremap <C-h> :bp<CR>

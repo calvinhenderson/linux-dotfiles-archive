@@ -34,7 +34,7 @@ if [ "$PAD" -eq 0 ]; then
     for monitor in $MONITORS; do
         if [ "$BAR" -ne 0 ] && [ "$monitor" -eq 0 ]; then
             height="$(xwininfo -id $(xwininfo -root -children | grep polybar | awk '{print $1}') | awk '/Height:/{print $2}')"
-            ex herbstclient pad "$monitor" "$height" 0 0 0
+            ex herbstclient pad "$monitor" 0 0 "$height" 0
         else
             ex herbstclient pad "$monitor" 0 0 0 0
         fi

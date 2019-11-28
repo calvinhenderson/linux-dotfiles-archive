@@ -2,11 +2,12 @@
 ! Terminal settings                                                            !
 !------------------------------------------------------------------------------!
 ! Window
+URxvt*termName: rxvt-256color
 URxvt.geometry: 128x42
 URxvt.depth: 32
 
 ! Font
-URxvt.font: xft:monospace:size=10
+URxvt.font: xft:monospace:size=11
 !URxvt.font: -xos4-terminus-*-*-*-24-*
 
 ! Border

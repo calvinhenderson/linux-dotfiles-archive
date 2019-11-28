@@ -9,13 +9,15 @@ primary = "${xrdb:color4}"
 alert = "${xrdb:color1}"
 
 ;-------------------------------------------------------------------------------
-; TOP BAR                                                                      ;
+; BOTTOM BAR                                                                   ;
 ;-------------------------------------------------------------------------------
 
-[bar/top]
+[bar/bottom]
 enable-ipc = true
 monitor = eDP1
+monitor-fallback = DP1
 
+bottom = true
 width = 100%
 height = 50
 

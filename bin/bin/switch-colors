@@ -43,4 +43,4 @@ else
 fi
 
 # Notify completion
-notify-send "switch-colors" "\n$COLOR"
+#notify-send "switch-colors" "\n$COLOR"

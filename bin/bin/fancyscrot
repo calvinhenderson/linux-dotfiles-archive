@@ -1,0 +1,25 @@
+#!/bin/sh
+# Clips the screen to the clipboard
+
+border="50"
+
+name=$(date +%m-%d-%Y_%H-%M.png)
+scrot "$@" "/tmp/$name"
+
+{
+  stats="$(xdotool getactivewindow getwindowgeometry)"
+  echo "$stats" | awk '/Position/{print $2}' | grep -o '[[:digit:]]\+'
+  echo "$stats" | awk '/Geometry/{print $2}' | grep -o '[[:digit:]]\+'
+} | xargs -n4 | {
+  read -r x y w h
+    x="$((x - border))"
+    y="$((y + border))"
+    w="$((w + border*2))"
+    h="$((h + border*2))"
+    echo "cropping image to border."
+    convert -crop ${w}x${h}+${x},${y} "/tmp/$name" "/tmp/$name"
+}
+
+echo "copying image to clipboard."
+xclip -selection clipboard -target image/png < "/tmp/$name"
+rm "/tmp/$name"

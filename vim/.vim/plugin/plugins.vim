@@ -23,6 +23,9 @@ let g:ycm_enable_diagnostic_signs=1
 " Limelight
 let g:limelight_conceal_ctermfg=8
 
+" Gutter
+call g:gutter#init()
+
 function! s:goyo_enter()
     Limelight
 endfunction

@@ -148,13 +148,22 @@ hc set smart_frame_surroundings 1
 hc set mouse_recenter_gap 0
 hc set swap_monitors_to_get_tag 0
 
-# rules
+# clear all rules
 hc unrule -F
+
+# generic rules
 hc rule focus=on # normally focus new clients
 hc rule ewmhnotify=off # don't notify clients that they've been fullscreened
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+
+# window->tag rules
+hc rule class~'firefox' tag='2' switchtag=on focus=on ewmhnotify=off
+hc rule class='Gimp' tag='4' switchtag=on focus=on
+hc rule class='spotify' tag='8' switchtag=off
+hc rule class='TelegramDesktop' tag='8' switchtag=off
+hc rule class='discord' tag='8' switchtag=off
 
 hc set tree_style '╾│ ├└╼─┐'
 
@@ -174,7 +183,7 @@ hc attr theme.floating.active.color "${xrdb:color4}"
 bar_border=$(grep "^border-size" $HOME/.config/polybar/config | awk '{print $3}')
 bar_height=$((( $(grep "^height" $HOME/.config/polybar/config | awk '{print $3}') + $bar_border * 2 )))
 
-hc pad 0 $(($bar_height+$padding)) $padding $padding $padding
+hc pad 0 $padding $padding $(($bar_height+$padding)) $padding
 hc keybind $Mod-b spawn herbstluft_focus
 
 herbstclient chain $cmds

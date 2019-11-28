@@ -22,6 +22,16 @@ done
 foreground=$(xrdb -query | awk '/^*.?foreground:/ { print $2 }')
 background=$(xrdb -query | awk '/^*.?background:/ { print $2 }')
 
+# These values may not be set by the theme!
+if [ -z "$foreground" ]; then
+  foreground=$(xrdb -query | awk '/^.?color0:/ {print $2 }')
+  echo "*foreground: ${foreground}" | xrdb -merge
+fi
+if [ -z "$background" ]; then
+  background=$(xrdb -query | awk '/^.?color7:/ {print $2 }')
+  echo "*background: ${background}" | xrdb -merge
+fi
+
 xrdb -query | xargs -d ':' echo | grep "^style" | while read -r key val; do
     sed -i "s/\${xrdb:$key}/${val}/g" "$1"
 done

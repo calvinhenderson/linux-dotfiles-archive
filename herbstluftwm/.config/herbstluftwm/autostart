@@ -1,10 +1,10 @@
 #!/bin/sh
 
-$HOME/.profile
+"$HOME/.profile"
 
 # Make sure we are up-to-date
-xrdb -merge $HOME/.config/xresources/config
-xrdb -merge $HOME/.config/xresources/colors/$(cat $HOME/.theme)
+xrdb -load  "$HOME/.config/xresources/config"
+xrdb -merge "$HOME/.config/xresources/colors/$(cat "$HOME/.theme")"
 
 INFILES=$(tr '\n' ' ' <<-ENDINFILES
 	$HOME/.config/herbstluftwm/config
@@ -15,7 +15,7 @@ INFILES=$(tr '\n' ' ' <<-ENDINFILES
 ENDINFILES
 )
 for file in $INFILES; do
-    preprocess $file &
+    preprocess "$file" &
 done && wait
 
 killall polybar
@@ -25,20 +25,20 @@ killall dunst
 killall notify_battery
 killall flashfocus
 
-$HOME/.config/herbstluftwm/config
-xrdb -merge $HOME/.config/rofi/xresources
-xrdb -merge $HOME/.urxvt/config
+"$HOME/.config/herbstluftwm/config"
+xrdb -merge "$HOME/.config/rofi/xresources"
+xrdb -merge "$HOME/.urxvt/config"
 
 # session configuration
 #hsetroot -solid "$(xrdb -query | awk '/*color8:/{print $2}')" &
-color-wallpaper -f "$HOME/.cache/wallpaper-$(cat $HOME/.theme).png" &
+color-wallpaper -f "$HOME/.cache/wallpaper-$(cat "$HOME/.theme").png" &
 xsetroot -cursor_name left_ptr &
 
 # user processes
 dunst &
 compton -b &
-polybar top &
-$HOME/.config/herbstluftwm/notify_battery &
+polybar bottom &
+"$HOME/.config/herbstluftwm/notify_battery" &
 flashfocus &
 
 notify-send "Theme:" "$(sed 's/[-_]/ /g; s/\b\(.\)/\u\1/g' < "$HOME/.theme")"

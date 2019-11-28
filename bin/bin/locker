@@ -30,7 +30,7 @@ grab() {
 # Pause notifications
 prelock() {
     if [ -n "$(pidof dunst)" ]; then
-        killall -USR1 dunst
+        killall -SIGUSR1 dunst
     fi
 
     if [ -n "$img" ]; then
@@ -43,7 +43,7 @@ prelock() {
 # Resume notifications
 postlock() {
     if [ -n "$(pidof dunst)" ]; then
-        killall -USR2 dunst
+        killall -SIGUSR2 dunst
     fi
 
     if [ -f "$img" ]; then

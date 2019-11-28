@@ -21,8 +21,8 @@ set expandtab
 
 " Gutter
 set number
-set fdc=0
-set rnu
+set relativenumber
+set numberwidth=4
 
 " Colors
 syntax enable
