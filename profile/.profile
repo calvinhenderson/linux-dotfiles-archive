@@ -21,6 +21,10 @@ alias ls="/usr/bin/ls -1 --group-directories-first --color=always"
 alias lsl="/usr/bin/ls -lh --group-directories-first --color=always"
 alias lsa="/usr/bin/ls -lah --group-directories-first --color=always"
 
+# vim -> nvim
+alias vim="nvim"
+alias gvim="neovide"
+
 # tmux
 alias tnew="tmux new-session -s"
 alias tattach="tmux attach-session -t"

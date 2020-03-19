@@ -20,7 +20,7 @@ done && wait
 
 killall polybar
 killall herbstclient
-killall compton
+killall picom
 killall dunst
 killall notify_battery
 killall flashfocus
@@ -31,14 +31,15 @@ xrdb -merge "$HOME/.urxvt/config"
 
 # session configuration
 #hsetroot -solid "$(xrdb -query | awk '/*color8:/{print $2}')" &
-color-wallpaper -f "$HOME/.cache/wallpaper-$(cat "$HOME/.theme").png" &
+#color-wallpaper -f "$HOME/.cache/wallpaper-$(cat "$HOME/.theme").png" &
+feh --no-fehbg --bg-fill ~/Pictures/wallpaper/woods-sunset.jpg &
 xsetroot -cursor_name left_ptr &
 
 # user processes
 dunst &
-compton -b &
+#picom
 polybar bottom &
 "$HOME/.config/herbstluftwm/notify_battery" &
-flashfocus &
+#flashfocus &
 
 notify-send "Theme:" "$(sed 's/[-_]/ /g; s/\b\(.\)/\u\1/g' < "$HOME/.theme")"

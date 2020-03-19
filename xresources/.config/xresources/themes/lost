@@ -1,0 +1,37 @@
+! brightened #24354c to #34455c for readability
+
+! special
+*background: #15131e
+*foreground: #c2bfbf
+
+! black
+*color0: #15131e
+*color8: #15131e
+
+! red
+*color1: #fcd07a
+*color9: #fcd07a
+
+! green
+*color2: #34455c
+*color10: #34455c
+
+! yellow
+*color3: #ec794a
+*color11: #ec794a
+
+! blue
+*color4: #34455c
+*color12: #34455c
+
+! magenta
+*color5: #ec794a
+*color13: #ec794a
+
+! cyan
+*color6: #34455c
+*color14: #34455c
+
+! white
+*color7: #c2bfbf
+*color15: #c2bfbf

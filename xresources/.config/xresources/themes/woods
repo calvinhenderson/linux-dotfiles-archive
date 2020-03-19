@@ -1,0 +1,21 @@
+! special colors
+*foreground:        #e9e5c0
+*background:        #0C3035
+
+! 0-15
+*color0:  #0C3035
+*color1:  #C5793A
+*color2:  #A07048
+*color3:  #7D836F
+*color4:  #C18749
+*color5:  #DAA455
+*color6:  #E8C876
+*color7:  #e9e5c0
+*color8:  #a3a086
+*color9:  #C5793A
+*color10:  #A07048
+*color11:  #7D836F
+*color12:  #C18749
+*color13:  #DAA455
+*color14:  #E8C876
+*color15:  #e9e5c0

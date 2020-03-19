@@ -1,0 +1,38 @@
+! --- special colors ---
+
+*foreground: #d9baff
+*background: #403f44
+
+! --- standard colors ---
+
+! black
+*color0: #403f44
+*color8: #1a191c
+
+! red
+*color1: #c74e39
+*color9: #f44747
+
+! green
+*color2: #81b88b
+*color10: #4dbf57
+
+! yellow
+*color3: #ffc501
+*color11: #e5e510
+
+! blue
+*color4: #4e94ce
+*color12: #2472c8
+
+! magenta
+*color5: #b181ec
+*color13: #b267e6
+
+! cyan
+*color6: #0c7d9d
+*color14: #11a8cd
+
+! white
+*color7: #d9baff
+*color15: #ffffff

@@ -1,0 +1,21 @@
+! source: https://github.com/doums/darcula
+
+*foreground: #999999
+*background: #1F1F1F
+
+*color0:  #1F1F1F
+*color1:  #FF6B68
+*color2:  #A8C023
+*color3:  #D6BF55
+*color4:  #5394EC
+*color5:  #AE8ABE
+*color6:  #299999
+*color7:  #999999
+*color8:  #555555
+*color9:  #FF8785
+*color10: #A8C023
+*color11: #FFFF00
+*color12: #7EAEF1
+*color13: #FF99FF
+*color14: #6CDADA
+*color15: #FFFFFF

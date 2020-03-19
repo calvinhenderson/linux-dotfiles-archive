@@ -35,9 +35,9 @@ color0="$(xrdb -query | awk '/^*.?color0:/{print $2}')"
 
 # works when background is equal to color0 due to inner padding
 if [ "$background" = "$color0" ]; then
-    killall urxvt -SIGHUP
+    killall urxvt -SIGUSR1
     sleep .5
-    killall urxvt -SIGHUP
+    killall urxvt -SIGUSR1
 else
     notify-send "switch-colors" "\nfailed to set urxvt palette"
 fi

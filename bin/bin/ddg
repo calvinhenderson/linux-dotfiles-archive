@@ -1,0 +1,3 @@
+#!/bin/sh
+QUERY="$(echo "$@" | sed 's/\s\+/+/g')"
+w3m https://duckduckgo.com/?q=$QUERY

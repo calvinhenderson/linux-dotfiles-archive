@@ -5,7 +5,7 @@ border="50"
 
 name=$(date +%m-%d-%Y_%H-%M.png)
 scrot "$@" "/tmp/$name"
-
+stats="$(xdotool getactivewindow getwindowgeometry)"
 {
   stats="$(xdotool getactivewindow getwindowgeometry)"
   echo "$stats" | awk '/Position/{print $2}' | grep -o '[[:digit:]]\+'
@@ -13,11 +13,11 @@ scrot "$@" "/tmp/$name"
 } | xargs -n4 | {
   read -r x y w h
     x="$((x - border))"
-    y="$((y + border))"
+    y="$((y - border))"
     w="$((w + border*2))"
     h="$((h + border*2))"
-    echo "cropping image to border."
-    convert -crop ${w}x${h}+${x},${y} "/tmp/$name" "/tmp/$name"
+    echo "cropping image to border. ${w}x${h}+${x}+${y}"
+    convert -crop "${w}x${h}+${x}+${y}" "/tmp/$name" "/tmp/$name"
 }
 
 echo "copying image to clipboard."

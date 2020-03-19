@@ -1,0 +1,21 @@
+! -- special colors
+*foreground: #ffe4cf
+*background: #535f6b
+
+! -- normal colors
+*color0:  #535f6b
+*color1:  #ffe4cf
+*color2:  #ffe4cf
+*color3:  #ffe4cf
+*color4:  #ffe4cf
+*color5:  #ffe4cf
+*color6:  #ffe4cf
+*color7:  #ffe4cf
+*color8:  #535f6b
+*color9:  #fad6b6
+*color10: #fad6b6
+*color11: #fad6b6
+*color12: #fad6b6
+*color13: #fad6b6
+*color14: #fad6b6
+*color15: #fad6b6

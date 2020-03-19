@@ -1,0 +1,3 @@
+#!/bin/sh
+sleep 0.3
+xdotool getactivewindow windowsize "$@"
