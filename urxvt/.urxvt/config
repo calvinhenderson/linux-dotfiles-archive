@@ -7,7 +7,9 @@ URxvt.geometry: 120x40
 URxvt.depth: 32
 
 ! Font
-URxvt.font: xft:Overpass Mono:size=9
+!URxvt.font: xft:Monoid:size=10
+!URxvt.font: xft:Bitstream\ Vera\ Sans\ Mono:size=10
+URxvt.font: xft:Iosevka\ SS07:style=Regular:size=12
 !URxvt.font: -xos4-terminus-*-*-*-24-*
 
 ! Border
@@ -26,8 +28,14 @@ URxvt*scrollWithBuffer: false
 URxvt*scrollTtyKeypress: true
 
 ! Extensions
-URxvt*perl-ext-common: default,resize-font,config-reload
+URxvt.perl-ext-common: default,config-reload,matcher,resize-font
 URxvt.resize-font.step: 1
 
+! Interactivity
+URxvt.matcher.button: 1
+URxvt.matcher.pattern.1: \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
+
 ! Keysyms
+URxvt.keysym.C-Delete: perl:matcher:last
+URxvt.keysym.M-Delete: perl:matcher:list
 URxvt.keysym.Control-Tab: \033[27;5;9~

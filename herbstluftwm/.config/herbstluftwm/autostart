@@ -2,20 +2,22 @@
 
 "$HOME/.profile"
 
+WALLPAPERS=~/Pictures/wallpaper
+
 # Make sure we are up-to-date
 xrdb -load  "$HOME/.config/xresources/config"
 xrdb -merge "$HOME/.config/xresources/colors/$(cat "$HOME/.theme")"
 
 INFILES=$(tr '\n' ' ' <<-ENDINFILES
-	$HOME/.config/herbstluftwm/config
-	$HOME/.config/polybar/config
-	$HOME/.config/dunst/dunstrc
-	$HOME/.config/rofi/xresources
-	$HOME/.config/sddm/Main.qml
+  $HOME/.config/herbstluftwm/config
+  $HOME/.config/polybar/config
+  $HOME/.config/dunst/dunstrc
+  $HOME/.config/rofi/xresources
+  $HOME/.config/sddm/Main.qml
 ENDINFILES
 )
 for file in $INFILES; do
-    preprocess "$file" &
+  preprocess "$file" &
 done && wait
 
 killall polybar
@@ -29,17 +31,20 @@ killall flashfocus
 xrdb -merge "$HOME/.config/rofi/xresources"
 xrdb -merge "$HOME/.urxvt/config"
 
-# session configuration
-#hsetroot -solid "$(xrdb -query | awk '/*color8:/{print $2}')" &
-#color-wallpaper -f "$HOME/.cache/wallpaper-$(cat "$HOME/.theme").png" &
-feh --no-fehbg --bg-fill ~/Pictures/wallpaper/woods-sunset.jpg &
-xsetroot -cursor_name left_ptr &
-
 # user processes
 dunst &
-#picom
+picom -b &
 polybar bottom &
 "$HOME/.config/herbstluftwm/notify_battery" &
-#flashfocus &
+
+# session configuration
+theme_wallpaper=$(xrdb -query | awk '/*wallpaper:/{print $2}')
+if [ -f "$WALLPAPERS/$theme_wallpaper" ]; then
+  feh --no-fehbg --bg-fill "$WALLPAPERS/$theme_wallpaper" &
+else
+  # default wallpaper
+  feh --no-fehbg --bg-fill $WALLPAPERS/yosemite.jpg &
+fi
+xsetroot -cursor_name left_ptr &
 
 notify-send "Theme:" "$(sed 's/[-_]/ /g; s/\b\(.\)/\u\1/g' < "$HOME/.theme")"

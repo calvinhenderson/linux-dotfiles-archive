@@ -3,7 +3,8 @@
 #-----------#
 # Variables #
 #-----------#
-export EDITOR=vim
+export VISUAL=neovide
+export EDITOR=nvim
 export PATH=$HOME/bin:$PATH
 
 #---------#
@@ -30,19 +31,25 @@ alias tnew="tmux new-session -s"
 alias tattach="tmux attach-session -t"
 alias tls="tmux list-sessions"
 
+# x session
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+  startx
+fi
+
 # locker
 if [ "$TERM" = "linux" ]; then
-    alias lock="physlock"
+  alias lock="physlock"
 else
-    alias lock="locker"
+  alias lock="locker"
 fi
 
 #------- #
 # Prompt #
 #------- #
 if [ "$TERM" = "linux" ]; then
-    export PS1="› "
+  export PS1="› "
 else
-    export PS1="→ "
+  export PS1="→ "
 fi
+
 color-console

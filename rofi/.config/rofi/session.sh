@@ -4,12 +4,12 @@
 PROMPT=$(cat <<-ENDPROMPT
 		Lock
 		Suspend
+		Hibernate
 		Logout
 		Reboot
 		Poweroff
-		Cancel
 ENDPROMPT
-	#	Hibernate
+#	Hibernate
 )
 
 PARAMS=$(tr '\n' ' ' <<-ENDPARAMS
@@ -27,25 +27,25 @@ ENDPARAMS
 )
 
 case "$(echo "$PROMPT" | rofi $PARAMS | awk '{print $2}')" in
-    "Poweroff")
-        systemctl poweroff
-        ;;
-    "Reboot")
-        systemctl reboot
-        ;;
-    "Logout")
-        herbstclient quit
-        ;;
-    "Hibernate")
-        locker && systemctl hibernate
-        ;;
-    "Suspend")
-        locker && systemctl suspend
-        ;;
-    "Lock")
-        locker
-        ;;
-    "Cancel" | *)
-        exit
-        ;;
+	"Poweroff")
+		systemctl poweroff
+		;;
+	"Reboot")
+		systemctl reboot
+		;;
+	"Logout")
+		herbstclient quit
+		;;
+	"Hibernate")
+		locker && systemctl hibernate
+		;;
+	"Suspend")
+		locker && systemctl suspend
+		;;
+	"Lock")
+		locker
+		;;
+	*)
+		exit
+		;;
 esac

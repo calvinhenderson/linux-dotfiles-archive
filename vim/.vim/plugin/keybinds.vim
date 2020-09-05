@@ -11,6 +11,12 @@ nnoremap [ <C-y>
 " Switching buffers
 nnoremap gb :ls<CR>:b<space>
 
+" Switching splits
+nnoremap h <C-W>h
+nnoremap j <C-W>j
+nnoremap k <C-W>k
+nnoremap l <C-W>l
+
 " Searching tags
 nnoremap gt :tag<space>
 

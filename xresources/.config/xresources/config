@@ -12,7 +12,9 @@
 !------------------------------------------------------------------------------!
 ! Style settings                                                               !
 !------------------------------------------------------------------------------!
-style.padding:     15
-style.frame_width: 5
-style.font_face:   monospace
-style.font_size:   10
+style.padding:       10
+style.frame_gap:     0
+style.window_gap:    0
+style.frame_width:   4
+style.font_face:     monospace
+style.font_size:     10

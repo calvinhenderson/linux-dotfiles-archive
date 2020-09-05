@@ -1,7 +1,7 @@
 #!/bin/bash
 
 hc() {
-    cmds="$cmds ^ $@"
+  cmds="$cmds ^ $@"
 }
 
 hc emit_hook reload
@@ -78,12 +78,12 @@ tag_keys=( {1..8} 0 )
 
 hc rename default "${tag_names[0]}" || true
 for i in ${!tag_names[@]} ; do
-    hc add "${tag_names[$i]}"
-    key="${tag_keys[$i]}"
-    if ! [ -z "$key" ] ; then
-        hc keybind "$Mod-$key" use_index "$i"
-        hc keybind "$Mod-Shift-$key" move_index "$i"
-    fi
+  hc add "${tag_names[$i]}"
+  key="${tag_keys[$i]}"
+  if ! [ -z "$key" ] ; then
+    hc keybind "$Mod-$key" use_index "$i"
+    hc keybind "$Mod-Shift-$key" move_index "$i"
+  fi
 done
 
 # cycle through tags
@@ -99,18 +99,18 @@ hc keybind $Mod-p pseudotile toggle
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
 hc keybind $Mod-space                                                           \
-            or , and . compare tags.focus.curframe_wcount = 2                   \
-                     . cycle_layout +1 max vertical horizontal grid             \
-               , cycle_layout +1
+  or , and . compare tags.focus.curframe_wcount = 2                   \
+  . cycle_layout +1 max vertical horizontal grid             \
+  , cycle_layout +1
 
 hc keybind $Mod-Shift-space                                                     \
-            or , and . compare tags.focus.curframe_wcount = 2                   \
-                     . cycle_layout -1 max vertical horizontal grid             \
-               , cycle_layout -1
-# mouse
-hc mousebind $Mod-Button1 move
-hc mousebind $Mod-Button2 zoom
-hc mousebind $Mod-Button3 resize
+  or , and . compare tags.focus.curframe_wcount = 2                   \
+  . cycle_layout -1 max vertical horizontal grid             \
+  , cycle_layout -1
+  # mouse
+  hc mousebind $Mod-Button1 move
+  hc mousebind $Mod-Button2 zoom
+  hc mousebind $Mod-Button3 resize
 
 # focus
 hc keybind $Mod-BackSpace           cycle_monitor +1
@@ -124,25 +124,19 @@ hc keybind $Mod-i                   jumpto urgent
 # theme
 hc attr theme.reset 1
 hc set frame_border_width 0
-hc set always_show_frame 0
+hc set always_show_frame 1
 hc set frame_bg_transparent 1
 hc set frame_transparent_width 0
-hc set frame_gap 0
+hc set frame_gap ${xrdb:style.frame_gap}
+hc set frame_padding 0
 
 hc attr theme.inner_width 0
 hc attr theme.floating.outer_width 0
 
-# borders don't currently work quite right with the rounded corners :(
-#hc attr theme.border_width ${xrdb:style.frame_width}
-#hc attr theme.floating.border_width ${xrdb:style.frame_width}
-hc attr theme.border_width 0
-hc attr theme.floating.border_width 0
+hc attr theme.border_width ${xrdb:style.frame_width}
+hc attr theme.floating.border_width ${xrdb:style.frame_width}
 
-padding=20
-
-hc set window_gap $padding
-hc set window_radius 5
-hc set frame_padding 0
+hc set window_gap ${xrdb:style.window_gap}
 hc set smart_window_surroundings 0
 hc set smart_frame_surroundings 1
 hc set mouse_recenter_gap 0
@@ -159,7 +153,8 @@ hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
 # window->tag rules
-hc rule class~'firefox' tag='2' switchtag=on focus=on ewmhnotify=off
+#hc rule class~'firefox' tag='2' switchtag=on focus=on ewmhnotify=off
+hc rule class~'firefox' ewmhnotify=off
 hc rule class='Gimp' tag='4' switchtag=on focus=on
 hc rule class='spotify' tag='8' switchtag=off
 hc rule class='TelegramDesktop' tag='8' switchtag=off
@@ -170,8 +165,11 @@ hc set tree_style '╾│ ├└╼─┐'
 # unlock, just to be sure
 hc unlock
 
+hc attr settings.auto_detect_monitors true
+hc attr settings.auto_detect_panels true
 hc detect_monitors
 hc set_layout max
+hc pad 0 0
 
 hc attr theme.normal.color "${xrdb:color8}"
 hc attr theme.active.color "${xrdb:color4}"
@@ -180,10 +178,10 @@ hc attr theme.floating.normal.color "${xrdb:color8}"
 hc attr theme.floating.active.color "${xrdb:color4}"
 
 # polybar height
-bar_border=$(grep "^border-size" $HOME/.config/polybar/config | awk '{print $3}')
-bar_height=$((( $(grep "^height" $HOME/.config/polybar/config | awk '{print $3}') + $bar_border * 2 )))
-
-hc pad 0 $padding $padding $(($bar_height+$padding)) $padding
+#bar_border=$(grep "^border-size" $HOME/.config/polybar/config | awk '{print $3}')
+#bar_height=$((( $(grep "^height" $HOME/.config/polybar/config | awk '{print $3}') + $bar_border * 2 )))
+#
+#hc pad 0 $padding $padding $(($bar_height+$padding)) $padding
 hc keybind $Mod-b spawn herbstluft_focus
 
 herbstclient chain $cmds

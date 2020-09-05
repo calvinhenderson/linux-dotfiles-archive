@@ -8,14 +8,14 @@ case "$1" in
   "--prompt" | "-p" | "")
     colors=$(ls -ct "$HOME/.config/xresources/colors")
     COLOR="$(echo "$colors" | rofi -dmenu -p "theme" -width 350 -lines 6)"
-  ;;
+    ;;
   *)
     COLOR="$1"
-  ;;
+    ;;
 esac
 
 if [ -z "$COLOR" ]; then
-    exit 0
+  exit 0
 fi
 
 echo "$COLOR" > ~/.theme
@@ -30,17 +30,17 @@ touch "$HOME/.config/xresources/colors/$COLOR"
 ~/.config/herbstluftwm/load-layout
 
 # Reload the terminal color palette
-background="$(xrdb -query | awk '/^*.?background:/{print $2}')" 
+background="$(xrdb -query | awk '/^*.?background:/{print $2}')"
 color0="$(xrdb -query | awk '/^*.?color0:/{print $2}')"
 
 # works when background is equal to color0 due to inner padding
-if [ "$background" = "$color0" ]; then
-    killall urxvt -SIGUSR1
-    sleep .5
-    killall urxvt -SIGUSR1
-else
-    notify-send "switch-colors" "\nfailed to set urxvt palette"
-fi
+#if [ "$background" = "$color0" ]; then
+#    killall urxvt -SIGUSR1
+#    sleep .5
+#    killall urxvt -SIGUSR1
+#else
+#    notify-send "switch-colors" "\nfailed to set urxvt palette"
+#fi
 
 # Notify completion
 #notify-send "switch-colors" "\n$COLOR"
