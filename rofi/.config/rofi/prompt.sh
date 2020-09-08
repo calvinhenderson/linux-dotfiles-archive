@@ -3,9 +3,10 @@
 
 PARAMS=$(tr '\n' ' ' <<-ENDPARAMS
 	-i
-	-lines 6
+	-lines 4
 	-hide-scrollbar
 	-show run
+	-columns 2
 ENDPARAMS
 )
 

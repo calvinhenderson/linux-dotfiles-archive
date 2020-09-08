@@ -5,7 +5,7 @@
 [colors]
 background = "${xrdb:background}"
 foreground = "${xrdb:foreground}"
-primary = "${xrdb:color4}"
+primary = "${xrdb:foreground}"
 alert = "${xrdb:color1}"
 
 ;-------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ modules-left = powersearch workspaces xwindow
 modules-center = date
 modules-right = music network backlight volume battery powermenu
 
-font-0 = "${xrdb:style.font_face}:size=${xrdb:style.font_size};4"
+font-0 = "menu:size=16;4"
 font-1 = "FontAwesome:size=${xrdb:style.font_size};4"
 
 tray-position = none

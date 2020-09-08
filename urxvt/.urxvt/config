@@ -3,14 +3,11 @@
 !------------------------------------------------------------------------------!
 ! Window
 URxvt*termName: rxvt-unicode-256color
-URxvt.geometry: 120x40
+URxvt.geometry: 84x32
 URxvt.depth: 32
 
 ! Font
-!URxvt.font: xft:Monoid:size=10
-!URxvt.font: xft:Bitstream\ Vera\ Sans\ Mono:size=10
-URxvt.font: xft:Iosevka\ SS07:style=Regular:size=12
-!URxvt.font: -xos4-terminus-*-*-*-24-*
+URxvt.font: xft:monospace:size=13
 
 ! Border
 URxvt.border: 0
@@ -19,23 +16,39 @@ URxvt.internalBorder: 25
 URxvt.externalBorder: 0
 
 ! Scrollbar
-URxvt*scrollBar: false
-URxvt*thickness: 0
-URxvt*scrollBar_right: false
-URxvt*scrollBar_floating: true
-URxvt*scrollTtyOutput: true
-URxvt*scrollWithBuffer: false
-URxvt*scrollTtyKeypress: true
+URxvt.scrollBar: false
+URxvt.thickness: 0
+URxvt.scrollBar_right: false
+URxvt.scrollBar_floating: true
+URxvt.scrollTtyOutput: true
+URxvt.scrollWithBuffer: false
+URxvt.scrollTtyKeypress: true
 
 ! Extensions
-URxvt.perl-ext-common: default,config-reload,matcher,resize-font
+URxvt.perl-ext-common: default,tabbedex,matcher,resize-font,config-reload
+
+! Resize-font
+URxvt.keysym.C-minus: resize-font:smaller
+URxvt.keysym.C-plus: resize-font:bigger
+URxvt.keysym.C-equal: resize-font:reset
+URxvt.keysym.C-question: resize-font:show
+
+! Tabbed
+URxvt.tabbed.no-tabbedex-keys: true
+URxvt.tabbed.reopen-on-close: yes
+URxvt.tabbed.autohide: true
 URxvt.resize-font.step: 1
 
-! Interactivity
+URxvt.keysym.C-t: perl:tabbedex:new_tab
+URxvt.keysym.C-left: perl:tabbedex:prev_tab
+URxvt.keysym.C-right: perl:tabbedex:next_tab
+
+! Matcher
 URxvt.matcher.button: 1
 URxvt.matcher.pattern.1: \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
 
-! Keysyms
 URxvt.keysym.C-Delete: perl:matcher:last
 URxvt.keysym.M-Delete: perl:matcher:list
-URxvt.keysym.Control-Tab: \033[27;5;9~
+
+! Char Keysyms
+URxvt.keysym.C-Tab: \033[27;5;9~

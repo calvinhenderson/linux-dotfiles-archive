@@ -6,7 +6,7 @@ WALLPAPERS=~/Pictures/wallpaper
 
 # Make sure we are up-to-date
 xrdb -load  "$HOME/.config/xresources/config"
-xrdb -merge "$HOME/.config/xresources/colors/$(cat "$HOME/.theme")"
+xrdb -merge "$HOME/.config/xresources/themes/$(cat "$HOME/.theme")"
 
 INFILES=$(tr '\n' ' ' <<-ENDINFILES
   $HOME/.config/herbstluftwm/config
@@ -45,6 +45,7 @@ else
   # default wallpaper
   feh --no-fehbg --bg-fill $WALLPAPERS/yosemite.jpg &
 fi
+
 xsetroot -cursor_name left_ptr &
 
 notify-send "Theme:" "$(sed 's/[-_]/ /g; s/\b\(.\)/\u\1/g' < "$HOME/.theme")"

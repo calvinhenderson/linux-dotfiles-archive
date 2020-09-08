@@ -172,10 +172,10 @@ hc set_layout max
 hc pad 0 0
 
 hc attr theme.normal.color "${xrdb:color8}"
-hc attr theme.active.color "${xrdb:color4}"
-hc attr theme.urgent.color "${xrdb:color1}"
+hc attr theme.active.color "${xrdb:color1}"
+hc attr theme.urgent.color "${xrdb:foreground}"
 hc attr theme.floating.normal.color "${xrdb:color8}"
-hc attr theme.floating.active.color "${xrdb:color4}"
+hc attr theme.floating.active.color "${xrdb:color1}"
 
 # polybar height
 #bar_border=$(grep "^border-size" $HOME/.config/polybar/config | awk '{print $3}')

@@ -1,12 +1,13 @@
 #!/bin/sh
 
 # Updates the current wm theme and makes it persistent
-# Available values are located in $HOME/.config/xresources/colors
+# Available values are located in $HOME/.config/xresources/themes
 # Run with `--prompt` to execute a dmenu-style prompt to choose a colorscheme
 
+# Prompt the user or use the theme provided
 case "$1" in
   "--prompt" | "-p" | "")
-    colors=$(ls -ct "$HOME/.config/xresources/colors")
+    colors=$(ls -ct "$HOME/.config/xresources/themes")
     COLOR="$(echo "$colors" | rofi -dmenu -p "theme" -width 350 -lines 6)"
     ;;
   *)
@@ -14,33 +15,35 @@ case "$1" in
     ;;
 esac
 
+# No colorscheme was provided, do NOTHING
 if [ -z "$COLOR" ]; then
   exit 0
 fi
 
+# Update our theme file with the current theme
 echo "$COLOR" > ~/.theme
 
+# Save the WM layout and reload
 ~/.config/herbstluftwm/save-layout
 herbstclient reload
+
+# There's probably a better way to do this, but....MEH
 sleep 2
 
 # Update colorscheme timestamp (used to sort in switcher)
-touch "$HOME/.config/xresources/colors/$COLOR"
+touch "$HOME/.config/xresources/themes/$COLOR"
 
+# Restore the WM layout
 ~/.config/herbstluftwm/load-layout
 
 # Reload the terminal color palette
 background="$(xrdb -query | awk '/^*.?background:/{print $2}')"
 color0="$(xrdb -query | awk '/^*.?color0:/{print $2}')"
 
-# works when background is equal to color0 due to inner padding
-#if [ "$background" = "$color0" ]; then
-#    killall urxvt -SIGUSR1
-#    sleep .5
-#    killall urxvt -SIGUSR1
-#else
-#    notify-send "switch-colors" "\nfailed to set urxvt palette"
-#fi
+# set a default borderColor if none was present
+if [ -z "$(xrdb -query | grep '*borderColor')" ]; then
+  echo "*borderColor: ${background}" | xrdb -merge
+fi
 
-# Notify completion
-#notify-send "switch-colors" "\n$COLOR"
+# reload terminal colors
+killall urxvt -HUP
